@@ -1,0 +1,4 @@
+baseURL = "https://lian-book.github.io/"
+languageCode = "zh-cn"
+title = "Lian's Book"
+theme = "PaperMod"
