@@ -7,3 +7,4 @@ theme = "PaperMod"
 mainSections = []
 ShowPostNavLinks = true
 ShowBreadCrumbs = true
+ShowReadingTime = false
