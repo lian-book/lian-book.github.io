@@ -4,6 +4,6 @@ title = "Lian's Book"
 theme = "PaperMod"
 
 [params]
-mainSections = []
+mainSections = ["novel"]
 ShowPostNavLinks = true
 ShowBreadCrumbs = true
