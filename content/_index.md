@@ -7,4 +7,4 @@ title: "人各有命"
 《人各有命》是一部关于命运、选择与挣脱的故事。
 
 ## 开始阅读
-- [第一章 人各有命](/novel/rengeyouming/ch01/)
+- [进入《人各有命》章节目录](/novel/rengeyouming/)
