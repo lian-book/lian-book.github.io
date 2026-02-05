@@ -27,11 +27,9 @@
       </h2>
     </header>
 
-    {{ with .Summary }}
-      <div class="entry-content">
-        <p>{{ . }}</p>
-      </div>
-    {{ end }}
+    <div class="entry-content">
+  <p>{{ .Plain | truncate 10 }}</p>
+</div>
 
     <footer class="entry-footer">
       {{ with .Date }}
