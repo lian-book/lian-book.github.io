@@ -1,0 +1,46 @@
+{{ define "main" }}
+
+<header class="page-header">
+  <h1>{{ .Title }}</h1>
+
+  {{ $all := .RegularPages.ByWeight }}
+  <p style="margin-top:.5rem; opacity:.75;">
+    共 {{ len $all }} 章
+  </p>
+
+  {{ with .Content }}
+    <div class="post-content">
+      {{ . }}
+    </div>
+  {{ end }}
+</header>
+
+{{ $pages := .RegularPages.ByWeight }}
+
+{{ range $pages }}
+  <article class="post-entry">
+    <header class="entry-header">
+      <h2 class="entry-hint-parent">
+        <a href="{{ .RelPermalink }}">
+          第 {{ .Weight }} 章 · {{ .Title }}
+        </a>
+      </h2>
+    </header>
+
+    {{ with .Summary }}
+      <div class="entry-content">
+        <p>{{ . }}</p>
+      </div>
+    {{ end }}
+
+    <footer class="entry-footer">
+      {{ with .Date }}
+        {{ .Format "January 2, 2006" }}
+      {{ end }}
+    </footer>
+
+    <a class="entry-link" aria-label="post link to {{ .Title }}" href="{{ .RelPermalink }}"></a>
+  </article>
+{{ end }}
+
+{{ end }}
