@@ -20,17 +20,31 @@
 <ul class="novel-chapter-list" style="list-style:none; padding:0; margin:0;">
   {{ range $pages }}
     <li class="novel-chapter-item"
-        style="padding: .9rem 0; border-bottom: 1px solid var(--border);">
+        style="padding:.9rem 0; border-bottom:1px solid var(--border);">
+
       <a href="{{ .RelPermalink }}"
-         style="display:block; font-weight:700; font-size:1.05rem; line-height:1.4;">
+         style="
+           display:block;
+           font-weight:700;
+           font-size:1.05rem;
+           line-height:1.4;
+         ">
         第 {{ .Weight }} 章 · {{ .Title }}
+
+        <span style="
+          margin-left:.5rem;
+          font-weight:400;
+          font-size:.9rem;
+          opacity:.7;
+          white-space:nowrap;
+        ">
+          {{ .Plain | truncate 10 }}…
+        </span>
       </a>
 
-      <div style="margin-top:.25rem; opacity:.7; font-size:.95rem;">
-        {{ .Plain | truncate 10 }}
-      </div>
     </li>
   {{ end }}
 </ul>
 
 {{ end }}
+
