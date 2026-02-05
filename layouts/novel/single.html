@@ -16,32 +16,32 @@
 
   <!-- 章节导航 -->
   <nav class="post-nav"
-       style="margin-top:3rem; padding-top:1.5rem; border-top:1px solid var(--border);
-              display:flex; justify-content:space-between; gap:1rem;">
+     style="margin-top:3rem; padding-top:1.5rem; border-top:1px solid var(--border);
+            display:flex; justify-content:space-between; gap:1rem;">
 
-    <!-- 左侧：上一章 or 返回目录 -->
-    <div>
-      {{ with .NextInSection }}
-        <a href="{{ .RelPermalink }}">
-          &larr; 上一章：{{ .Title }}
-        </a>
-      {{ else }}
-        <a href="/novel/rengeyouming/">
-          &larr; 返回章节目录
-        </a>
-      {{ end }}
-    </div>
+  <!-- 左侧：上一章 or 返回目录 -->
+  <div>
+    {{ with .PrevInSection }}
+      <a href="{{ .RelPermalink }}">
+        &larr; 上一章：{{ .Title }}
+      </a>
+    {{ else }}
+      <a href="/novel/rengeyouming/">
+        &larr; 返回章节目录
+      </a>
+    {{ end }}
+  </div>
 
-    <!-- 右侧：下一章 -->
-    <div style="text-align:right;">
-      {{ with .PrevInSection }}
-        <a href="{{ .RelPermalink }}">
-          下一章：{{ .Title }} &rarr;
-        </a>
-      {{ end }}
-    </div>
+  <!-- 右侧：下一章 -->
+  <div style="text-align:right;">
+    {{ with .NextInSection }}
+      <a href="{{ .RelPermalink }}">
+        下一章：{{ .Title }} &rarr;
+      </a>
+    {{ end }}
+  </div>
 
-  </nav>
+</nav>
 
 </article>
 {{ end }}
