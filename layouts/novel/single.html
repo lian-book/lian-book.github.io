@@ -1,24 +1,10 @@
 {{ define "main" }}
-<article class="post-single">
 
-  <!-- 标题 -->
-  <header class="post-header">
-    <h1 class="post-title">{{ .Title }}</h1>
-    {{ with .Date }}
-      <div class="post-meta">{{ .Format "January 2, 2006" }}</div>
-    {{ end }}
-  </header>
-
-  <!-- 正文 -->
-  <div class="post-content">
-    {{ .Content }}
-  </div>
-
-  <!-- 章节导航 -->
-  {{/* ===== Novel Prev/Next (deterministic by weight) ===== */}}
+{{/* 取当前章节所在目录（section）的所有文章，按 weight 排序 */}}
 {{ $pages := .CurrentSection.RegularPages.ByWeight }}
 {{ $cur := .RelPermalink }}
 
+{{/* 找到当前文章在列表中的 index */}}
 {{ $idx := -1 }}
 {{ range $i, $p := $pages }}
   {{ if eq $p.RelPermalink $cur }}
@@ -26,41 +12,63 @@
   {{ end }}
 {{ end }}
 
-{{ $prev := nil }}
-{{ $next := nil }}
+{{/* 根据 idx 计算上一章/下一章（用布尔变量避免 nil 赋值） */}}
+{{ $hasPrev := false }}
+{{ $hasNext := false }}
+{{ $prevLink := "" }}
+{{ $prevTitle := "" }}
+{{ $nextLink := "" }}
+{{ $nextTitle := "" }}
 
 {{ if ge $idx 0 }}
   {{ if gt $idx 0 }}
-    {{ $prev = index $pages (sub $idx 1) }}
+    {{ $hasPrev = true }}
+    {{ $p := index $pages (sub $idx 1) }}
+    {{ $prevLink = $p.RelPermalink }}
+    {{ $prevTitle = $p.Title }}
   {{ end }}
+
   {{ if lt (add $idx 1) (len $pages) }}
-    {{ $next = index $pages (add $idx 1) }}
+    {{ $hasNext = true }}
+    {{ $n := index $pages (add $idx 1) }}
+    {{ $nextLink = $n.RelPermalink }}
+    {{ $nextTitle = $n.Title }}
   {{ end }}
 {{ end }}
 
-<nav class="post-nav"
-     style="margin-top:3rem; padding-top:1.5rem; border-top:1px solid var(--border);
-            display:flex; justify-content:space-between; gap:1rem;">
-
-  <!-- 左侧：上一章；如果没有上一章（第一章），就返回章节目录 -->
-  <div>
-    {{ if $prev }}
-      <a href="{{ $prev.RelPermalink }}">&larr; 上一章：{{ $prev.Title }}</a>
-    {{ else }}
-      <a href="{{ .CurrentSection.RelPermalink }}">&larr; 返回章节目录</a>
+<article class="post-single">
+  <header class="post-header">
+    <h1 class="post-title">{{ .Title }}</h1>
+    {{ with .Date }}
+      <div class="post-meta">{{ .Format "January 2, 2006" }}</div>
     {{ end }}
+  </header>
+
+  <div class="post-content">
+    {{ .Content }}
   </div>
 
-  <!-- 右侧：下一章 -->
-  <div style="text-align:right;">
-    {{ if $next }}
-      <a href="{{ $next.RelPermalink }}">下一章：{{ $next.Title }} &rarr;</a>
-    {{ end }}
-  </div>
+  <nav class="post-nav"
+       style="margin-top:3rem; padding-top:1.5rem; border-top:1px solid var(--border);
+              display:flex; justify-content:space-between; gap:1rem;">
 
-</nav>
+    <!-- 左侧：上一章；如果没有上一章（第一章），返回章节目录 -->
+    <div>
+      {{ if $hasPrev }}
+        <a href="{{ $prevLink }}">&larr; 上一章：{{ $prevTitle }}</a>
+      {{ else }}
+        <a href="{{ .CurrentSection.RelPermalink }}">&larr; 返回章节目录</a>
+      {{ end }}
+    </div>
 
+    <!-- 右侧：下一章 -->
+    <div style="text-align:right;">
+      {{ if $hasNext }}
+        <a href="{{ $nextLink }}">下一章：{{ $nextTitle }} &rarr;</a>
+      {{ end }}
+    </div>
 
+  </nav>
 </article>
-{{ end }}
 
+{{ end }}
