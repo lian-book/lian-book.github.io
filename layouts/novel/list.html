@@ -1,10 +1,10 @@
 {{ define "main" }}
 
-<header class="page-header">
+<header class="page-header" style="margin-bottom:1rem;">
   <h1>{{ .Title }}</h1>
 
   {{ $all := .RegularPages.ByWeight }}
-  <p style="margin-top:.5rem; opacity:.75;">
+  <p style="margin-top:.25rem; opacity:.75;">
     共 {{ len $all }} 章
   </p>
 
@@ -17,28 +17,20 @@
 
 {{ $pages := .RegularPages.ByWeight }}
 
-{{ range $pages }}
-  <article class="post-entry">
-    <header class="entry-header">
-      <h2 class="entry-hint-parent">
-        <a href="{{ .RelPermalink }}">
-          第 {{ .Weight }} 章 · {{ .Title }}
-        </a>
-      </h2>
-    </header>
+<ul class="novel-chapter-list" style="list-style:none; padding:0; margin:0;">
+  {{ range $pages }}
+    <li class="novel-chapter-item"
+        style="padding: .9rem 0; border-bottom: 1px solid var(--border);">
+      <a href="{{ .RelPermalink }}"
+         style="display:block; font-weight:700; font-size:1.05rem; line-height:1.4;">
+        第 {{ .Weight }} 章 · {{ .Title }}
+      </a>
 
-    <div class="entry-content">
-  <p>{{ .Plain | truncate 10 }}</p>
-</div>
-
-    <footer class="entry-footer">
-      {{ with .Date }}
-        {{ .Format "January 2, 2006" }}
-      {{ end }}
-    </footer>
-
-    <a class="entry-link" aria-label="post link to {{ .Title }}" href="{{ .RelPermalink }}"></a>
-  </article>
-{{ end }}
+      <div style="margin-top:.25rem; opacity:.7; font-size:.95rem;">
+        {{ .Plain | truncate 10 }}
+      </div>
+    </li>
+  {{ end }}
+</ul>
 
 {{ end }}
