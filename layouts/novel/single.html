@@ -1,28 +1,48 @@
 {{ define "main" }}
-  <article class="post-single">
-    <header class="post-header">
-      <h1 class="post-title">{{ .Title }}</h1>
-      {{ with .Date }}
-        <div class="post-meta">{{ .Format "January 2, 2006" }}</div>
-      {{ end }}
-    </header>
+<article class="post-single">
 
-    <div class="post-content">
-      {{ .Content }}
+  <!-- 标题 -->
+  <header class="post-header">
+    <h1 class="post-title">{{ .Title }}</h1>
+    {{ with .Date }}
+      <div class="post-meta">{{ .Format "January 2, 2006" }}</div>
+    {{ end }}
+  </header>
+
+  <!-- 正文 -->
+  <div class="post-content">
+    {{ .Content }}
+  </div>
+
+  <!-- 章节导航 -->
+  <nav class="post-nav"
+       style="margin-top:3rem; padding-top:1.5rem; border-top:1px solid var(--border);
+              display:flex; justify-content:space-between; gap:1rem;">
+
+    <!-- 左侧：上一章 or 返回目录 -->
+    <div>
+      {{ with .NextInSection }}
+        <a href="{{ .RelPermalink }}">
+          &larr; 上一章：{{ .Title }}
+        </a>
+      {{ else }}
+        <a href="/novel/rengeyouming/">
+          &larr; 返回章节目录
+        </a>
+      {{ end }}
     </div>
 
-    <!-- Novel Prev/Next Nav -->
-    <nav class="post-nav" style="margin-top:2rem; display:flex; gap:1rem; justify-content:space-between;">
-      <div>
-        {{ with .PrevInSection }}
-          <a href="{{ .RelPermalink }}">&larr; 上一章：{{ .Title }}</a>
-        {{ end }}
-      </div>
-      <div style="text-align:right;">
-        {{ with .NextInSection }}
-          <a href="{{ .RelPermalink }}">下一章：{{ .Title }} &rarr;</a>
-        {{ end }}
-      </div>
-    </nav>
-  </article>
+    <!-- 右侧：下一章 -->
+    <div style="text-align:right;">
+      {{ with .PrevInSection }}
+        <a href="{{ .RelPermalink }}">
+          下一章：{{ .Title }} &rarr;
+        </a>
+      {{ end }}
+    </div>
+
+  </nav>
+
+</article>
 {{ end }}
+
