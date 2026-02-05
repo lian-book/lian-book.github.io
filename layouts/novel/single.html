@@ -15,33 +15,51 @@
   </div>
 
   <!-- 章节导航 -->
-  <nav class="post-nav"
+  {{/* ===== Novel Prev/Next (deterministic by weight) ===== */}}
+{{ $pages := .CurrentSection.RegularPages.ByWeight }}
+{{ $cur := .RelPermalink }}
+
+{{ $idx := -1 }}
+{{ range $i, $p := $pages }}
+  {{ if eq $p.RelPermalink $cur }}
+    {{ $idx = $i }}
+  {{ end }}
+{{ end }}
+
+{{ $prev := nil }}
+{{ $next := nil }}
+
+{{ if ge $idx 0 }}
+  {{ if gt $idx 0 }}
+    {{ $prev = index $pages (sub $idx 1) }}
+  {{ end }}
+  {{ if lt (add $idx 1) (len $pages) }}
+    {{ $next = index $pages (add $idx 1) }}
+  {{ end }}
+{{ end }}
+
+<nav class="post-nav"
      style="margin-top:3rem; padding-top:1.5rem; border-top:1px solid var(--border);
             display:flex; justify-content:space-between; gap:1rem;">
 
-  <!-- 左侧：上一章 or 返回目录 -->
+  <!-- 左侧：上一章；如果没有上一章（第一章），就返回章节目录 -->
   <div>
-    {{ with .PrevInSection }}
-      <a href="{{ .RelPermalink }}">
-        &larr; 上一章：{{ .Title }}
-      </a>
+    {{ if $prev }}
+      <a href="{{ $prev.RelPermalink }}">&larr; 上一章：{{ $prev.Title }}</a>
     {{ else }}
-      <a href="/novel/rengeyouming/">
-        &larr; 返回章节目录
-      </a>
+      <a href="{{ .CurrentSection.RelPermalink }}">&larr; 返回章节目录</a>
     {{ end }}
   </div>
 
   <!-- 右侧：下一章 -->
   <div style="text-align:right;">
-    {{ with .NextInSection }}
-      <a href="{{ .RelPermalink }}">
-        下一章：{{ .Title }} &rarr;
-      </a>
+    {{ if $next }}
+      <a href="{{ $next.RelPermalink }}">下一章：{{ $next.Title }} &rarr;</a>
     {{ end }}
   </div>
 
 </nav>
+
 
 </article>
 {{ end }}
