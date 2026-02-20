@@ -3,6 +3,8 @@ languageCode = "zh-cn"
 title = "Lian's Book"
 theme = "PaperMod"
 
+author = "Lian"
+
 [params]
 mainSections = []
 ShowPostNavLinks = true
