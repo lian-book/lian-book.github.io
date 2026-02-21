@@ -3,10 +3,11 @@ languageCode = "zh-cn"
 title = "Lian's Book"
 theme = "PaperMod"
 
-author = "Lian"
+disableKinds = ["RSS"]
 
 [params]
 mainSections = []
 ShowPostNavLinks = true
 ShowBreadCrumbs = true
 ShowReadingTime = false
+
