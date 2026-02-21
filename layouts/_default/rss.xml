@@ -1,0 +1,27 @@
+{{- $site := .Site -}}
+{{- $title := $site.Title -}}
+{{- $author := $site.Params.author | default $site.Title -}}
+
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0">
+  <channel>
+    <title>{{ $title }}</title>
+    <link>{{ $site.BaseURL }}</link>
+    <description>{{ $site.Title }}</description>
+    <generator>Hugo</generator>
+
+    {{ with $author }}
+    <author>{{ . }}</author>
+    {{ end }}
+
+    {{ range first 20 $site.RegularPages }}
+    <item>
+      <title>{{ .Title }}</title>
+      <link>{{ .Permalink }}</link>
+      <pubDate>{{ .Date.Format "Mon, 02 Jan 2006 15:04:05 -0700" }}</pubDate>
+      <guid>{{ .Permalink }}</guid>
+      <description>{{ .Summary }}</description>
+    </item>
+    {{ end }}
+  </channel>
+</rss>
